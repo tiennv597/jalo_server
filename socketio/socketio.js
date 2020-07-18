@@ -19,7 +19,7 @@ module.exports = function (app, io) {
                 'id_room_vc': id_room_vc,
                 'id_room_gr': id_room_gr,
             }
-            var rooms = JSON.stringify(r);
+            var rooms = JSON.stringify(listRoomCnWord);
 
             socket.emit(SOCKET_CONSTANT.server_send_rooms, rooms);
         });

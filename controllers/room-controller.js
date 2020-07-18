@@ -12,15 +12,7 @@ module.exports = function (io, socket, namespace, listRoom) {
     var d = new Date();
     var r = Math.floor((Math.random() * 10));
     var id_room = d.getMilliseconds().toString() + r.toString();
-    // if (data == null) {
-    //   socket.emit('server-send-rooms', listRoom);
-    // }
-    // else {
-    //    console.log(data);
-    //let obj_room = { id_room };
-    socket.join(id_room);
-    listRoom.set(id_room, '');
-    var r = {
+    var roomObj = {
       'id_room': id_room,
       "id_owner": userId,
       "name_noom": "",
@@ -38,16 +30,19 @@ module.exports = function (io, socket, namespace, listRoom) {
         }
       ]
     }
+    listRoom.set(id_room, roomObj);
+    socket.join(id_room);
 
-    var room = JSON.stringify(r);
+    var room = JSON.stringify(roomObj);
     console.log(room);
     socket.emit(SOCKET_CONSTANT.server_send_room, room);
     console.log(listRoom.get(id_room));
     // }
   });
-  socket.on(SOCKET_CONSTANT.join_room, function (id_room, password) {
-
+  socket.on(SOCKET_CONSTANT.join_room, function (id_room, password, userId, fullName) {
     socket.join(id_room);
+    var roomObj= listRoom.get(id_room);
+    console.log(roomObj);
     var user = [];
     nsp.to(id_room).emit(SOCKET_CONSTANT.joined_room, user);
 

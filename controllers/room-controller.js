@@ -40,11 +40,13 @@ module.exports = function (io, socket, namespace, listRoom) {
     // }
   });
   socket.on(SOCKET_CONSTANT.join_room, function (id_room, password, userId, fullName) {
-    socket.join(id_room);
-    var roomObj= listRoom.get(id_room);
+    var roomObj = listRoom.get(id_room);
+    console.log(id_room);
+    console.log(roomObj.users);
     console.log(roomObj);
-    var user = [];
-    nsp.to(id_room).emit(SOCKET_CONSTANT.joined_room, user);
+    var room = JSON.stringify(roomObj);
+    socket.join(id_room);
+    nsp.to(id_room).emit(SOCKET_CONSTANT.joined_room, room);
 
   });
 

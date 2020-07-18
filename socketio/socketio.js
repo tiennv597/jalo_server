@@ -4,36 +4,26 @@ var listRoom = [];
 var listRoomCnWord = new Map();
 var listRoomVocabulary = new Map();
 var listRoomGrammar = new Map();
+
 module.exports = function (app, io) {
     //deful name space
     io.on(SOCKET_CONSTANT.connect, function (socket) {
         // Load the chat controller
         console.log('ket noi toi ');
-
         socket.on(SOCKET_CONSTANT.client_get_rooms, function (data) {
-            let id_room_cw = Array.from(listRoomCnWord.keys());
-            let id_room_vc = Array.from(listRoomCnWord.keys());
-            let id_room_gr = Array.from(listRoomCnWord.keys());
+            let roomsCw = Array.from(listRoomCnWord.values());
+            let rooms_Vc = Array.from(listRoomCnWord.values());
             var r = {
-                'id_room_cw': id_room_cw,
-                'id_room_vc': id_room_vc,
-                'id_room_gr': id_room_gr,
+                'rooms_cw': roomsCw,
+                'rooms_vc': rooms_Vc,
+                // 'rooms_gr': infoRooms,
             }
-            var rooms = JSON.stringify(listRoomCnWord);
-
+            var rooms = JSON.stringify(r);
+            console.log(rooms);
             socket.emit(SOCKET_CONSTANT.server_send_rooms, rooms);
         });
 
     });
-
-    //creat name space
-    // var nsp = io.of('/game-namespace');
-    // nsp.on(SOCKET_CONSTANT.connect, function (socket) {
-    //     // Load the controller
-    //     console.log('someone just connected !');
-    //     require('../controllers/game-controller')(io, socket);
-    //     require('../controllers/room-controller')(io, socket, listRoom);
-    // });
 
     //creat china word namespace
     var china_word_ns = io.of(SOCKET_CONSTANT.china_word_ns);

@@ -3,7 +3,7 @@ require('dotenv').config()
 var http = require('http');
 const bodyParser = require("body-parser");
 const express = require("express");
-const logger = require("morgan");
+//const logger = require("morgan");
 const mongoClient = require("mongoose");
 /**
  * Get port from environment and store in Express.
@@ -38,7 +38,7 @@ const deckRoute = require("./routes/deck");
 const userRoute = require("./routes/user");
 
 // Middlewares
-app.use(logger("dev"));
+//app.use(logger("dev"));
 app.use(bodyParser.json());
 
 // Routes

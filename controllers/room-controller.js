@@ -12,39 +12,73 @@ module.exports = function (io, socket, namespace, listRoom) {
     var d = new Date();
     var r = Math.floor((Math.random() * 10));
     var id_room = d.getMilliseconds().toString() + r.toString();
-    var roomObj = {
+    // var roomObj = {
+    //   'id_room': id_room,
+    //   "id_owner": userId,
+    //   "name_noom": "",
+    //   "password": "",
+    //   'level': level,
+    //   "quantity": quantity,
+    //   "time": time,
+    //   "type": type,
+    //   "users": [
+    //     {
+    //       "id": userId,
+    //       "fullName": fullName,
+    //       "gender": "",
+    //       "profileUrl": ""
+    //     }
+    //   ]
+    // }
+    var info = {
       'id_room': id_room,
       "id_owner": userId,
       "name_noom": "",
       "password": "",
       'level': level,
       "quantity": quantity,
-      "time": time,
+      "time": "10",
       "type": type,
-      "users": [
-        {
-          "id": userId,
-          "fullName": fullName,
-          "gender": "",
-          "profileUrl": ""
-        }
-      ]
+    };
+
+    var user = {
+      id: userId,
+      fullName: fullName,
+      gender: '1',
+      profileUrl: '1',
+    };
+    var roomObj = {
+      "info": info,
+      "users": new Map()
     }
+
+    roomObj.users.set(userId, user);
+
     listRoom.set(id_room, roomObj);
     socket.join(id_room);
-
-    var room = JSON.stringify(roomObj);
+    var r = {
+      'info': info,
+      'users': user,
+    }
+    var room = JSON.stringify(r);
     console.log(room);
     socket.emit(SOCKET_CONSTANT.server_send_room, room);
     console.log(listRoom.get(id_room));
-    // }
   });
   socket.on(SOCKET_CONSTANT.join_room, function (id_room, password, userId, fullName) {
     var roomObj = listRoom.get(id_room);
     console.log(id_room);
     console.log(roomObj.users);
+    var user = {
+      "id": userId,
+      "fullName": fullName,
+      "gender": "",
+      "profileUrl": ""
+    }
+    roomObj.users.set(userId, user);
     console.log(roomObj);
     var room = JSON.stringify(roomObj);
+    console.log(room);
     socket.join(id_room);
     nsp.to(id_room).emit(SOCKET_CONSTANT.joined_room, room);
 
@@ -52,7 +86,6 @@ module.exports = function (io, socket, namespace, listRoom) {
 
   socket.on(SOCKET_CONSTANT.leave, (id_room) => {
     let obj_room = { id_room };
-
     socket.leave(id_room);
     listRoom.delete(obj_room);
     nsp.to(id_room).emit(SOCKET_CONSTANT.leave);

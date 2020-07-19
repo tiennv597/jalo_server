@@ -11,8 +11,13 @@ module.exports = function (app, io) {
         // Load the chat controller
         console.log('ket noi toi ');
         socket.on(SOCKET_CONSTANT.client_get_rooms, function (data) {
-            let roomsCw = Array.from(listRoomCnWord.values());
-            let rooms_Vc = Array.from(listRoomCnWord.values());
+            let rCw = Array.from(listRoomCnWord.values());
+            let rVc = Array.from(listRoomCnWord.values());
+            rCw = rCw.map(x => ({'info': x.info}));
+            rVc = rVc.map(x => ({'info': x.info}));
+            console.log(rCw);
+            let roomsCw = Array.from(rCw);
+            let rooms_Vc = Array.from(rVc);
             var r = {
                 'rooms_cw': roomsCw,
                 'rooms_vc': rooms_Vc,

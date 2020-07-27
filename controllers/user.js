@@ -23,9 +23,9 @@ const encodedToken = (userID) => {
 const authFacebook = async (req, res, next) => {
   // Assign a token
   const token = encodedToken(req.user._id)
-
+  const user = req.user;
   res.setHeader('Authorization', token)
-  return res.status(200).json({ success: true })
+  return res.status(200).json({ user })
 }
 
 const authGoogle = async (req, res, next) => {

@@ -81,11 +81,10 @@ passport.use(
         // check whether this current user exists in our database
         const user = await User.findOne({
           authFacebookID: profile.id,
-          authType: "google",
+          authType: "facebook",
         });
 
-        if (user) return done(null, user)
-
+        if (user) return done(null, user);
         // If new account
         const newUser = new User({
           authType: 'facebook',

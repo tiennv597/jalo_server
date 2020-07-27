@@ -1,4 +1,4 @@
-// var questionModel = require("../models/questions")();
+
 // var grammarModel = require("../models/grammar")();
 
 function Learn() {

@@ -1,10 +1,6 @@
-/**
- * game controller 
- */
 var SOCKET_CONSTANT = require("../constant/socket_constant.js");
-//var learnCtrl = require("../controllers/learn-controller")();
-module.exports = function (io, socket, namespace) {
 
+module.exports = function (io, socket, namespace) {
   var nsp = io.of(namespace);
 
   socket.on('client-send-scores', (room, message) => {
@@ -26,7 +22,7 @@ module.exports = function (io, socket, namespace) {
   //   console.log(displayName);
   // });
 
-// lay 
+  // lay 
   // socket.on(SOCKET_CONSTANT.get_quizzes, (room, level, type) => {
   //   var obj = { level: level, type: type };
   //   learnCtrl.getRandomByLevelAndType(obj, function (pto) {

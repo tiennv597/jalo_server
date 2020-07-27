@@ -6,10 +6,12 @@ const { bool } = require('@hapi/joi')
 
 const UserSchema = new Schema({
   firstName: {
-    type: String
+    type: String,
+    default: null
   },
   lastName: {
-    type: String
+    type: String,
+    default: null
   },
   email: {
     type: String,
@@ -18,7 +20,9 @@ const UserSchema = new Schema({
     lowercase: true
   },
   password: {
-    type: String
+    type: String,
+    default: null
+
   },
   authGoogleID: {
     type: String,
@@ -43,7 +47,8 @@ const UserSchema = new Schema({
     default: 'Female'
   },
   birthday: {
-    type: Date
+    type: Date,
+    default: null
   },
   languageSpoken: {
     type: [String]
@@ -69,7 +74,8 @@ const UserSchema = new Schema({
     default: null
   },
   enable: {
-    type: Boolean
+    type: Boolean,
+    default: null
   },
   id: {
     type: String,

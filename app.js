@@ -2,6 +2,7 @@
 require('dotenv').config()
 var http = require('http');
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const express = require("express");
 //const logger = require("morgan");
 const mongoClient = require("mongoose");
@@ -36,14 +37,17 @@ server.on('listening', onListening);
 
 const deckRoute = require("./routes/deck");
 const userRoute = require("./routes/user");
+const questionRoute = require("./routes/question");
 
 // Middlewares
 //app.use(logger("dev"));
+app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
 app.use("/decks", deckRoute);
 app.use("/users", userRoute);
+app.use("/question", questionRoute);
 
 // Routes
 app.get("/", (req, res, next) => {

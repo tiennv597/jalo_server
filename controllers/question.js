@@ -17,7 +17,7 @@ const getQuestion = async (req, res, next) => {
 }
 const getQuestionByQuantity = async (req, res, next) => {
 	console.log(req.body)
-	const questions = await Question.aggregate([{ $sample: { size: 2 } }])
+	const questions = await Question.aggregate([{ $sample: { size: 10 } }])
 	console.log(JSON.stringify(questions));
 	return res.status(200).json({ questions: questions })
 

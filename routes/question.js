@@ -9,10 +9,7 @@ router.route('/')
     // .get(DeckController.index)
     .post(QuestionController.newQuestion)
 
-// router.route('/:deckID')
-//     .get(validateParam(schemas.idSchema, 'deckID'), DeckController.getDeck)
-//     .put(validateParam(schemas.idSchema, 'deckID'), validateBody(schemas.newDeckSchema), DeckController.replaceDeck)
-//     .patch(validateParam(schemas.idSchema, 'deckID'), validateBody(schemas.deckOptionalSchema), DeckController.updateDeck)
-//     .delete(validateParam(schemas.idSchema, 'deckID'), DeckController.deleteDeck)
+router.route('/getbyquantity')
+    .get(QuestionController.getQuestionByQuantity)
 
 module.exports = router

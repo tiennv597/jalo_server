@@ -10,10 +10,17 @@ const deleteQuestion = async (req, res, next) => {
 
 	return res.status(200).json({ success: true })
 }
-
 const getQuestion = async (req, res, next) => {
 
 	return res.status(200).json({ deck })
+
+}
+const getQuestionByQuantity = async (req, res, next) => {
+	console.log(req.body)
+	const questions = await Question.aggregate([{ $sample: { size: 2 } }])
+	console.log(JSON.stringify(questions));
+	return res.status(200).json({ questions: questions })
+
 }
 
 const newQuestion = async (req, res, next) => {
@@ -49,5 +56,6 @@ module.exports = {
 	getQuestion,
 	newQuestion,
 	replaceQuestion,
-	updateQuestion
+	updateQuestion,
+	getQuestionByQuantity
 }

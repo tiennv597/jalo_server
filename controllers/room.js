@@ -1,5 +1,6 @@
 
 var SOCKET_CONSTANT = require("../constant/socket_constant.js");
+const Question = require('../models/learn/Question')
 module.exports = function (io, socket, namespace, listRoom) {
 
   var nsp = io.of(namespace);
@@ -89,8 +90,9 @@ module.exports = function (io, socket, namespace, listRoom) {
     io.sockets.in(socket.gameRoom).emit("server-chat", data);
     console.log(data);
   });
-  socket.on(SOCKET_CONSTANT.start_game, (id_room) => {
-    nsp.to(id_room).emit(SOCKET_CONSTANT.start_game);
+  socket.on(SOCKET_CONSTANT.start_game, (id_room, quantity, type, level) => {
+    const questions = await Question.aggregate([{ $sample: { size: quantity } }])
+    nsp.to(id_room).emit(SOCKET_CONSTANT.start_game, { questions: questions });
   });
 
   //test

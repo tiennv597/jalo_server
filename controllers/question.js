@@ -23,6 +23,8 @@ const getQuestionByQuantity = async (req, res, next) => {
 
 }
 
+
+
 const newQuestion = async (req, res, next) => {
 	// Create a new question
 	const question = req.body.question;

@@ -44,7 +44,8 @@ module.exports = {
      joined_room: 'joined_room',
      get_quizzes: 'get_quizzes',
      send_quizzes: 'send_quizzes',
-
+     check_answer: 'check_answer',
+     next_question: 'next_question',
 
      check_info_room: 'check_info_room',
      result_check_room: 'result_check_room',

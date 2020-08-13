@@ -9,7 +9,11 @@ module.exports = function (io, socket, namespace, listRoom) {
   });
 
   socket.on(SOCKET_CONSTANT.creat_room, function (userId, fullName, level, type, quantity, time) {
-    console.log(level);
+    console.log(time);
+    if (time == null) {
+      time = "10"
+    }
+    console.log(time);
     var d = new Date();
     var r = Math.floor((Math.random() * 10));
     var id_room = d.getMilliseconds().toString() + r.toString();
@@ -20,9 +24,10 @@ module.exports = function (io, socket, namespace, listRoom) {
       "password": "",
       'level': level,
       "quantity": quantity,
-      "time": "10",
+      "time": time,
       "type": type,
     };
+
 
     var user = {
       id: userId,
@@ -45,9 +50,7 @@ module.exports = function (io, socket, namespace, listRoom) {
       'all_user': users,
     }
     var room = JSON.stringify(r);
-    console.log(room);
     socket.emit(SOCKET_CONSTANT.server_send_room, room);
-    console.log(listRoom.get(id_room));
   });
   socket.on(SOCKET_CONSTANT.join_room, function (id_room, password, userId, fullName) {
     var roomObj = listRoom.get(id_room);
@@ -90,8 +93,9 @@ module.exports = function (io, socket, namespace, listRoom) {
     io.sockets.in(socket.gameRoom).emit("server-chat", data);
     console.log(data);
   });
-  socket.on(SOCKET_CONSTANT.start_game, (id_room, quantity, type, level) => {
-    const questions = await Question.aggregate([{ $sample: { size: quantity } }])
+  socket.on(SOCKET_CONSTANT.start_game, async (id_room, quantity, type, level) => {
+    let number = Number(quantity);
+    const questions = await Question.aggregate([{ $sample: { size: number } }]);
     nsp.to(id_room).emit(SOCKET_CONSTANT.start_game, { questions: questions });
   });
 

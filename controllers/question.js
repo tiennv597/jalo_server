@@ -10,8 +10,41 @@ const deleteQuestion = async (req, res, next) => {
 
 	return res.status(200).json({ success: true })
 }
+
 const getQuestion = async (req, res, next) => {
 
+
+
+
+
+	return res.status(200).json({ deck })
+
+}
+const getByContent = async (req, res, next) => {
+	const searchByType = req.body.searchByType;
+	const search = req.body.search;
+	console.log(search, searchByType);
+	return res.status(200).json({ deck })
+
+}
+const getById = async (req, res, next) => {
+	console.log("getById");
+	console.log(req.body);
+	return res.status(200).json({ deck })
+
+}
+const getByType = async (req, res, next) => {
+	console.log("getByType");
+	return res.status(200).json({ deck })
+
+}
+const getBySubType = async (req, res, next) => {
+	console.log("getBySubType");
+	return res.status(200).json({ deck })
+
+}
+const getByLevel = async (req, res, next) => {
+	console.log("getBySubLevel");
 	return res.status(200).json({ deck })
 
 }
@@ -22,8 +55,6 @@ const getQuestionByQuantity = async (req, res, next) => {
 	return res.status(200).json({ questions: questions })
 
 }
-
-
 
 const newQuestion = async (req, res, next) => {
 	// Create a new question
@@ -54,6 +85,11 @@ const updateQuestion = async (req, res, next) => {
 }
 
 module.exports = {
+	getById,
+	getByType,
+	getByLevel,
+	getBySubType,
+	getByContent,
 	deleteQuestion,
 	getQuestion,
 	newQuestion,

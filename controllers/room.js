@@ -27,7 +27,6 @@ module.exports = function (io, socket, namespace, listRoom) {
       "type": type,
     };
 
-
     var user = {
       id: userId,
       fullName: fullName,

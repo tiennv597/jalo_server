@@ -3,13 +3,26 @@ const router = require('express-promise-router')()
 
 const QuestionController = require('../controllers/question')
 
-// { validateBody, validateParam, schemas } = require('../helpers/routerHelpers')
-
 router.route('/')
-    // .get(DeckController.index)
-    .post(QuestionController.newQuestion)
+    .post(QuestionController.newQuestion);
 
 router.route('/getbyquantity')
-    .get(QuestionController.getQuestionByQuantity)
+    .post(QuestionController.getQuestionByQuantity);
+
+router.route('/getByContent')
+    .post(QuestionController.getByContent);
+
+router.route('/getById')
+    .post(QuestionController.getById);
+
+router.route('/getByType')
+    .post(QuestionController.getByType);
+
+router.route('/getBySubType')
+    .post(QuestionController.getBySubType);
+
+router.route('/getByLevel')
+    .post(QuestionController.getByLevel);
+
 
 module.exports = router

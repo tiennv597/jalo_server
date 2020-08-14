@@ -46,6 +46,7 @@ module.exports = {
      send_quizzes: 'send_quizzes',
      check_answer: 'check_answer',
      next_question: 'next_question',
+     update_room: 'update_room',
 
      check_info_room: 'check_info_room',
      result_check_room: 'result_check_room',

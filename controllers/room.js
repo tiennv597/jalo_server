@@ -9,8 +9,7 @@ module.exports = function (io, socket, namespace, listRoom) {
   });
 
   socket.on(SOCKET_CONSTANT.creat_room, function (userId, fullName, level, type, quantity, time) {
-    console.log(time);
-    if (time == null) {
+    if (time == null) {// đang bug khi tạo time = 10 thì undefined đamg không biết tại sao
       time = "10"
     }
     console.log(time);
@@ -76,11 +75,32 @@ module.exports = function (io, socket, namespace, listRoom) {
     nsp.to(id_room).emit(SOCKET_CONSTANT.joined_room, room);
 
   });
+  // update info room
+  socket.on(SOCKET_CONSTANT.update_room, function (idRoom, level, type, quantity, time) {
+    console.log(idRoom, level, type, quantity, time);
+    if (time == null) {// đang bug khi tạo time = 10 thì undefined đamg không biết tại sao
+      time = "10"
+    }
+    var roomObj = listRoom.get(idRoom);
+    console.log(JSON.stringify(roomObj));
+    roomObj.info.level = level;
+    roomObj.info.type = type;
+    roomObj.info.quantity = quantity;
+    roomObj.info.time = time;
+    console.log(JSON.stringify(roomObj));
+    listRoom.set(idRoom, roomObj);
 
-  socket.on(SOCKET_CONSTANT.leave, (id_room) => {
+    var room = JSON.stringify(roomObj);
+    nsp.to(idRoom).emit(SOCKET_CONSTANT.update_room, room);
+  });
+  //leave room
+  socket.on(SOCKET_CONSTANT.leave, (id_room, userInRoom) => {
     //let obj_room = { id_room };
     socket.leave(id_room);
-    listRoom.delete(id_room);
+    if (userInRoom == 1) {
+      listRoom.delete(id_room);
+    }
+
     nsp.to(id_room).emit(SOCKET_CONSTANT.leave);
   });
 

@@ -18,6 +18,7 @@ var questionSchema = new Schema({
     question: String,
     explain: String,
     answer: [{ _id: false, answer: String, result: Boolean }],
+    results:[],
     date: { type: Date, default: Date.now },
     comments: [{ author: String, imageURL: String, body: String, date: Date }],
     bold: [{ type: String }],

@@ -13,20 +13,20 @@ const deleteQuestion = async (req, res, next) => {
 
 const getQuestion = async (req, res, next) => {
 
-
-
-
-
 	return res.status(200).json({ deck })
 
 }
 const getByContent = async (req, res, next) => {
 	const searchByType = req.body.searchByType;
 	const search = req.body.search;
-	console.log(search, searchByType);
-	return res.status(200).json({ deck })
-
+	console.log(search);
+	const questions = await Question.aggregate(
+		[{ $match: { 'question': { '$regex': search, '$options': 'i' } } }]
+	);
+	console.log(questions);
+	return res.status(200).json({ questions: questions })
 }
+
 const getById = async (req, res, next) => {
 	console.log("getById");
 	console.log(req.body);
@@ -56,8 +56,8 @@ const getQuestionByQuantity = async (req, res, next) => {
 
 }
 
+// Create a new question
 const newQuestion = async (req, res, next) => {
-	// Create a new question
 	const question = req.body.question;
 	console.log(question);
 	const newQuestion = new Question(question);

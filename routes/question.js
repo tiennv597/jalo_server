@@ -5,7 +5,10 @@ const QuestionController = require('../controllers/question')
 
 router.route('/')
     .post(QuestionController.newQuestion);
-
+router.route('/update')
+    .post(QuestionController.updateQuestion);
+router.route('/delete')
+    .post(QuestionController.deleteQuestion);
 router.route('/getbyquantity')
     .post(QuestionController.getQuestionByQuantity);
 

@@ -7,8 +7,10 @@
 const Question = require('../models/learn/Question')
 
 const deleteQuestion = async (req, res, next) => {
-
-	return res.status(200).json({ success: true })
+	const id = req.body.id;
+	console.log(id);
+	await Question.findByIdAndDelete(id);
+	return res.status(200).json({ status: true })
 }
 
 const getQuestion = async (req, res, next) => {
@@ -23,7 +25,6 @@ const getByContent = async (req, res, next) => {
 	const questions = await Question.aggregate(
 		[{ $match: { 'question': { '$regex': search, '$options': 'i' } } }]
 	);
-	console.log(questions);
 	return res.status(200).json({ questions: questions })
 }
 
@@ -53,13 +54,11 @@ const getQuestionByQuantity = async (req, res, next) => {
 	const questions = await Question.aggregate([{ $sample: { size: 10 } }])
 	console.log(JSON.stringify(questions));
 	return res.status(200).json({ questions: questions })
-
 }
 
 // Create a new question
 const newQuestion = async (req, res, next) => {
 	const question = req.body.question;
-	console.log(question);
 	const newQuestion = new Question(question);
 	var d = new Date();
 	let id = question.level.name + question.type.id + question.subType.id +
@@ -70,7 +69,6 @@ const newQuestion = async (req, res, next) => {
 		d.getMinutes() +
 		d.getSeconds()
 	newQuestion.idQuestion = id;
-	console.log(newQuestion);
 
 	await newQuestion.save();
 
@@ -81,7 +79,10 @@ const replaceQuestion = async (req, res, next) => {
 }
 
 const updateQuestion = async (req, res, next) => {
-	return res.status(200).json({ success: true })
+	const question = req.body.question;
+	console.log(question);
+	await Question.findByIdAndUpdate(question._id, question);
+	return res.status(200).json({ status: true })
 }
 
 module.exports = {

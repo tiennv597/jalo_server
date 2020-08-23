@@ -27,6 +27,7 @@ module.exports = function (app, io) {
             console.log(rooms);
             socket.emit(SOCKET_CONSTANT.server_send_rooms, rooms);
         });
+        
 
     });
 

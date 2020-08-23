@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     type: String,
     default: null
   },
+
   lastName: {
     type: String,
     default: null
@@ -19,6 +20,10 @@ const UserSchema = new Schema({
     unique: true,
     lowercase: true
   },
+  decks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Deck'
+  }],
   password: {
     type: String,
     default: null
@@ -32,14 +37,18 @@ const UserSchema = new Schema({
     type: String,
     default: null
   },
+  dio: {
+    type: String,
+    default: null
+  },
   authType: {
     type: String,
     enum: ['local', 'google', 'facebook'],
     default: 'local'
   },
-  decks: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Deck'
+  friends: [{
+    type: String,
+    default: null
   }],
   gender: {
     type: String,

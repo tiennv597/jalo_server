@@ -43,16 +43,16 @@ const getUser = async (req, res, next) => {
 
   return res.status(200).json({ user });
 };
+
 const getPublicProfile = async (userID) => {
   const user = await User.find({ _id: userID }, "firstName email");
-  // console.log(user);
+
 
   return user;
 };
 
 const getUserDecks = async (req, res, next) => {
   const { userID } = req.value.params;
-
   // Get user
   const user = await User.findById(userID).populate("decks");
 
@@ -97,6 +97,13 @@ const newUserDeck = async (req, res, next) => {
   res.status(201).json({ deck: newDeck });
 };
 
+const suggestions = async (req, res, next) => {
+  const users = await User.aggregate([{ $sample: { size: 10 } }])
+  //console.log(users);
+  console.log(JSON.stringify(users));
+  return res.status(200).json(users);
+};
+
 const replaceUser = async (req, res, next) => {
   // enforce new user to old user
   const { userID } = req.value.params;
@@ -115,12 +122,10 @@ const secret = async (req, res, next) => {
 const signIn = async (req, res, next) => {
   // Assign a token
   const token = encodedToken(req.user._id);
-  //var user = getPublicProfile(req.user._id);
   const user = req.user;
-
-  console.log(user);
   res.setHeader('Authorization', token)
   return res.status(200).json(user)
+  
 };
 
 const signUp = async (req, res, next) => {
@@ -129,7 +134,6 @@ const signUp = async (req, res, next) => {
   // Check if there is a user with the same user
   const foundUser = await User.findOne({ email })
   if (foundUser) return res.status(403).json({ error: { message: 'Email is already in use.' } })
-
   // Create a new user
   const newUser = new User({ firstName, lastName, email, password })
   newUser.save()
@@ -165,4 +169,5 @@ module.exports = {
   signIn,
   signUp,
   updateUser,
+  suggestions
 };

@@ -14,10 +14,9 @@ const deleteQuestion = async (req, res, next) => {
 }
 
 const getQuestion = async (req, res, next) => {
-
 	return res.status(200).json({ deck })
-
 }
+
 const getByContent = async (req, res, next) => {
 	const searchByType = req.body.searchByType;
 	const search = req.body.search;

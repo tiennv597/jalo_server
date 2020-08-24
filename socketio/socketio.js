@@ -9,6 +9,7 @@ module.exports = function (app, io) {
     //deful name space
     io.on(SOCKET_CONSTANT.connect, function (socket) {
         // Load the chat controller
+
         console.log('ket noi toi ');
         socket.on(SOCKET_CONSTANT.client_get_rooms, function (data) {
             let rCw = Array.from(listRoomCnWord.values());
@@ -27,8 +28,11 @@ module.exports = function (app, io) {
             console.log(rooms);
             socket.emit(SOCKET_CONSTANT.server_send_rooms, rooms);
         });
-        
-
+        socket.on(SOCKET_CONSTANT.add_friends, function (data) {
+            console.log("test");
+            socket.emit(SOCKET_CONSTANT.add_friends, "thanh cong roi");
+            
+        });
     });
 
     //create china word namespace

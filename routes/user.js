@@ -25,6 +25,8 @@ router.route('/secret').get(passport.authenticate('jwt', { session: false }), Us
 
 router.route('/suggestions').get(UserController.suggestions)
 
+router.route('/search').get(UserController.searchByName)
+
 router.route('/:userID')
     .get(validateParam(schemas.idSchema, 'userID'), UserController.getUser)
     .put(validateParam(schemas.idSchema, 'userID'), validateBody(schemas.userSchema), UserController.replaceUser)

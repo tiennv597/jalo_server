@@ -46,8 +46,6 @@ const getUser = async (req, res, next) => {
 
 const getPublicProfile = async (userID) => {
   const user = await User.find({ _id: userID }, "firstName email");
-
-
   return user;
 };
 
@@ -99,8 +97,20 @@ const newUserDeck = async (req, res, next) => {
 
 const suggestions = async (req, res, next) => {
   const users = await User.aggregate([{ $sample: { size: 10 } }])
-  //console.log(users);
-  console.log(JSON.stringify(users));
+  return res.status(200).json(users);
+};
+
+const searchByName = async (req, res, next) => {
+  const key = req.query.key;
+  //console.log(req);
+  const users = await User.aggregate(
+    [
+      { $match: { 'firstName': { '$regex': key, '$options': 'i' } } },
+      // { $match: { $or: [{ firstName: { '$regex': key, '$options': 'i' } }, { lastName: { '$regex': key, '$options': 'i' } }] } }
+
+    ]
+  );
+  console.log(users);
   return res.status(200).json(users);
 };
 
@@ -125,7 +135,7 @@ const signIn = async (req, res, next) => {
   const user = req.user;
   res.setHeader('Authorization', token)
   return res.status(200).json(user)
-  
+
 };
 
 const signUp = async (req, res, next) => {
@@ -169,5 +179,6 @@ module.exports = {
   signIn,
   signUp,
   updateUser,
-  suggestions
+  suggestions,
+  searchByName
 };

@@ -48,10 +48,12 @@ module.exports = {
      next_question: 'next_question',
      update_room: 'update_room',
      add_friends: 'add_friends',
+     create_socket_private: 'create_socket_private',
+     invite_into: 'invite_into',
 
 
+     
      check_info_room: 'check_info_room',
      result_check_room: 'result_check_room',
-
 
 };

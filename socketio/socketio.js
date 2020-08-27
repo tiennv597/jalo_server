@@ -9,7 +9,6 @@ module.exports = function (app, io) {
     //deful name space
     io.on(SOCKET_CONSTANT.connect, function (socket) {
         // Load the chat controller
-
         console.log('ket noi toi ');
         socket.on(SOCKET_CONSTANT.client_get_rooms, function (data) {
             let rCw = Array.from(listRoomCnWord.values());
@@ -28,10 +27,25 @@ module.exports = function (app, io) {
             console.log(rooms);
             socket.emit(SOCKET_CONSTANT.server_send_rooms, rooms);
         });
+        socket.on(SOCKET_CONSTANT.create_socket_private, function (data) {
+            console.log(data);
+            socket.join(data);
+            //socket.emit(SOCKET_CONSTANT.add_friends, "thanh cong roi");
+
+        });
         socket.on(SOCKET_CONSTANT.add_friends, function (data) {
             console.log("test");
             socket.emit(SOCKET_CONSTANT.add_friends, "thanh cong roi");
-            
+
+        });
+
+        socket.on(SOCKET_CONSTANT.invite_into, function (inviter, invitee, info) {
+            console.log(inviter);
+            console.log(invitee);
+            console.log(info);
+            //socket.emit(SOCKET_CONSTANT.add_friends, "thanh cong roi");
+            io.to(invitee._id).emit(SOCKET_CONSTANT.invite_into, inviter,invitee, info);
+
         });
     });
 
